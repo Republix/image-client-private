@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+@import "variables";
+
+
+/*
+    组合写法
+*/
+@mixin ellipsis() {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+/* 
+    兼容性写法
+*/
+@mixin user-select($content) {
+    -webkit-user-select: $content;
+    -moz-user-select: $content;
+    -ms-user-select: $content;
+    user-select: $contetn;
+}
+
+@mixin clearfix($direction: both) {
+    &:before {
+        content: '';
+        display: table;
+    }
+    &:after {
+        display: table;
+        clear: $direction;
+        content: '';
+    }
+}
+
+@mixin transition($content) {
+    -webkit-transition: $content;
+    transition: $content;
+}
+
+@mixin transform($content) {
+    -webkit-transform: $content;
+    transform: $content;
+}
+
+@mixin filter($content) {
+    -webkit-filter: $content;
+    -moz-filter: $content;
+    -ms-filter: $content;
+    -o-filter: $content;
+    filter: $content;
+}
+
+@mixin border-radius($content) {
+    -webkit-border-radius: $content;
+    -moz-border-radius: $content;
+    border-radius: $content;
+}
+
+@mixin box-sizing($content: border-box) {
+    -webkit-box-sizing: $content;
+    -moz-box-sizing: $content;
+    box-sizing: $content;
+}
+
+@mixin keyframes($name) {
+    @keyframes #{name} {
+        @content
+    }
+    @-moz-keyframes #{$name} {
+        @content
+    }
+    
+    @-webkit-keyframes #{$name} {
+        @content
+    }
+    
+    @-o-keyframes #{$name} {
+        @content
+    }
+}

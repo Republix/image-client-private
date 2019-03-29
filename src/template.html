@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="x-ua-compatible" content="ie=edge, chrome=1">
+    <meta charset="UTF-8">
+    <title>image-beta</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="max-age: 31536000">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="wap-font-scale" content="no">
+    <meta name="author" content="FE">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!-- Name of web application (only should be used if the website is used as an app) -->
+    <meta name="application-name" content="develop-republix">
+
+    <!-- Short description of the page (limit to 150 characters) -->
+    <!-- In *some* situations this description is used as a part of the snippet shown in the search results. -->
+    <meta name="description" content="hah">
+
+    <!-- Control the behavior of search engine crawling and indexing -->
+    <meta name="robots" content="index,follow,noodp"><!-- All Search Engines -->
+    <meta name="googlebot" content="index,follow"><!-- Google Specific -->
+
+    <!-- Short description of your site's subject -->
+    <meta name="subject" content="haha">
+
+    <!-- Very short sentence describing the purpose of the website -->
+    <meta name="abstract" content="haha">
+
+    <!-- Describes the topic of the website -->
+    <meta name="topic" content="">
+
+    <!-- Brief summary of the company or purpose of the website -->
+    <meta name="summary" content="">
+
+    <!-- Full domain name or web address -->
+    <meta name="url" content="republix.com">
+
+    <!-- Makes sure your website shows up in all countries and languages -->
+    <meta name="coverage" content="Worldwide">
+
+    <!-- Does the same as the coverage tag -->
+    <meta name="distribution" content="Global">
+
+    <!-- Gives a general age rating based on sites content -->
+    <meta name="rating" content="General">
+
+    <!-- Allows control over how referrer information is passed -->
+    <meta name="referrer" content="never">
+
+    <!-- Disable automatic detection and formatting of possible phone numbers -->
+    <meta name="format-detection" content="telephone=no">
+
+
+    <!-- Gives information about an author or another person -->
+    <link rel="someOneMail" href="mailto:haha@develop.com">
+    <link rel="someOneTel" href="tel:+86123456">
+
+
+
+    <link rel="icon" href="<%= htmlWebpackPlugin.files.favicon %>" sizes="32x32" type="image/png">
+
+    <!--[if lt IE 9]>
+    <script type="text/javascript" rel="script" charset="UTF-8">
+        (function () {
+            alert('兼容性差的低版本IE浏览器无法支持本系统!');
+        })()
+    </script>
+    <![endif]-->
+
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" charset="UTF-8" type="text/css">
+    <% } %>
+</head>
+<body>
+
+<div id="app"></div>
+
+<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+<script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>" type="text/javascript" charset="UTF-8"></script>
+<% } %>
+</body>
+</html>

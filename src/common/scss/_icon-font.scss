@@ -1,0 +1,72 @@
+/*
+    https://www.iconfont.cn/help/detail?spm=a313x.7781069.1998910419.d8d11a391&helptype=code
+*/
+
+@import 'variables';
+
+// @font-face {font-family: 'iconfont';
+//     src: url('../fonts/iconfont.eot');
+//     src: url('../fonts/iconfont.eot?#iefix') format('embedded-opentype'),
+//     url('../fonts/iconfont.woff') format('woff'),
+//     url('../fonts/iconfont.ttf') format('truetype'),
+//     url('../fonts/iconfont.svg#iconfont') format('svg');
+// }
+
+@font-face {
+    font-family: 'iconfont';  /* project id 1060212 */
+    src: url('//at.alicdn.com/t/font_1060212_k601la59po.eot');
+    src: url('//at.alicdn.com/t/font_1060212_k601la59po.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1060212_k601la59po.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1060212_k601la59po.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1060212_k601la59po.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1060212_k601la59po.svg#iconfont') format('svg');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+    Fun 1
+    can use by 字体编码
+    <i class="iconfont">&#x33;</i> 
+    ps: &# 开头的为html实体
+*/
+
+/*
+    Fun2
+    use by className
+    .iconfont-sky::before {
+        content: '\x33;';
+    }
+    <i class="iconfont iconfont-sky"></i>
+*/
+
+
+.iconfont-edit::after { content: '\e649' }
+.iconfont-next::after { content: '\e6f8' }
+.iconfont-pre::after { content: '\e720' }
+.iconfont-setting::after { content: '\e778' }
+.iconfont-location::after { content: '\e650' }
+.iconfont-discover::after { content: '\e67e' }
+.iconfont-discover-live::after { content: '\e609' }
+.iconfont-download::after { content: '\e62b' }
+.iconfont-fullscreen::after { content: '\e607' }
+.iconfont-creative::after { content: '\e718' }
+.iconfont-more::after { content: '\e684' }
+.iconfont-favor::after { content: '\e64c' }
+.iconfont-favor-fill::after { content: '\e64b' }
+.iconfont-like::after { content: '\e669' }
+.iconfont-like-fill::after { content: '\e668' }
+.iconfont-preview::after { content: '\e6dc' }
+// .iconfont- ::after { content: '\e' }
+// .iconfont- ::after { content: '\e' }
+// .iconfont- ::after { content: '\e' }
+// .iconfont- ::after { content: '\e' }
+// .iconfont- ::after { content: '\e' }
+// .iconfont- ::after { content: '\e' }
+// .iconfont- ::after { content: '\e' }
