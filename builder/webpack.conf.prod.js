@@ -10,6 +10,8 @@ const StyleLintPlugin = require('stylelint-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
+const { cleanFolder } = require('./utils')
+
 /**
  * 说明
  * #### 关于 样式
@@ -20,12 +22,20 @@ const { VueLoaderPlugin } = require('vue-loader')
 
 console.info(`webpacking in ${process.env.NODE_ENV || "未声明的环境"}`)
 
+
+const distPath = path.join(process.cwd(), OUTPUT_PATH)
+
+console.info('清空打包位置')
+
+cleanFolder(distPath, false)
+
+
 module.exports = (env, args) => ({
     entry: {
         main: path.join(process.cwd(), '/src/app.js')
     },
     output: {
-        path: path.join(process.cwd(), OUTPUT_PATH),
+        path: distPath,
         filename: '[name].[contenthash].dist.js',
         // publicPath: '/bing/client/',
         publicPath: PROXY_PATH,
@@ -41,7 +51,7 @@ module.exports = (env, args) => ({
 
         // styleLint 配置
         new StyleLintPlugin({
-            configFile: path.join(__dirname, '/.stylelintrc'),
+            configFile: path.join(process.cwd(), '/.stylelintrc'),
             failOnError: false, // 是否因样式错误而中断webpack
             quiet: false // 除初始化之外的内容不会被打印到控制台
         }),
@@ -54,8 +64,8 @@ module.exports = (env, args) => ({
 
         // htmlPlugin
         new HtmlWebpackPlugin({
-            filename: path.join(__dirname, OUTPUT_PATH + '/index.html'), // 输出html文件名字 
-            template: path.join(__dirname, '/src/template.html'), // 使用 html模板的位置
+            filename: path.join(process.cwd(), OUTPUT_PATH + '/index.html'), // 输出html文件名字 
+            template: path.join(process.cwd(), '/src/template.html'), // 使用 html模板的位置
             favicon: './static/wifi.ico',
             inject: false, // 是否要插入打包好的bundle.js 文件  可手动模板渲染插入
             publicPath: PROXY_PATH,

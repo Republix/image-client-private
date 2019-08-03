@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "cross-env NODE_ENV=production webpack --config ./webpack.conf.prod.js --progress --mode production",
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --config=webpack.conf.dev.js --mode development",
-    "loc-dev": "cross-env NODE_ENV=location webpack-dev-server --config=webpack.conf.dev.js --mode development"
+    "release": "cross-env NODE_ENV=production webpack --config ./builder/webpack.conf.prod.js --progress --mode production",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --config=./builder/webpack.conf.dev.js --mode development",
+    "loc-dev": "cross-env NODE_ENV=location webpack-dev-server --config=./builder/webpack.conf.dev.js --mode development",
+    "devh": "nodemon ./builder/test.js"
   },
   "author": "republix",
   "license": "ISC",
@@ -34,6 +35,7 @@
     "html-webpack-harddisk-plugin": "^1.0.1",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.11.0",
+    "nodemon": "^1.19.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "stylelint": "^9.10.1",

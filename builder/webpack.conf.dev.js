@@ -42,7 +42,7 @@ module.exports = {
         quiet: false, // 除初始启动信息之外的任何内容不会打印到控制台
         overlay: { warnings: false, errors: true } || false, // 发现错误后时候在浏览器全屏显示错误信息
         watchOptions: {
-            ignored: /node_modules/,
+            ignored: '../node_modules/',
         }
     },
     // inline-source-map 模式可以查看vue源码
@@ -64,16 +64,16 @@ module.exports = {
 
         // styleLint 配置
         new StyleLintPlugin({
-            configFile: path.join(__dirname, '/.stylelintrc'),
+            configFile: path.join(process.cwd(), '/.stylelintrc'),
             failOnError: false, // 是否因样式错误而中断webpack
             quiet: false // 除初始化之外的内容不会被打印到控制台
         }),
 
         // htmlPlugin
         new HtmlWebpackPlugin({
-            filename: path.join(__dirname, OUTPUT_PATH + '/index.html'), // 输出html文件名字 
-            template: path.join(__dirname, '/src/template.html'), // 使用 html模板的位置
-            favicon: './static/wifi.ico',
+            filename: path.join(process.cwd(), OUTPUT_PATH + '/index.html'), // 输出html文件名字 
+            template: path.join(process.cwd(), '/src/template.html'), // 使用 html模板的位置
+            // favicon: '../static/wifi.ico',
             inject: false, // 是否要插入打包好的bundle.js 文件  可手动模板渲染插入
             // publicPath: STATIC_PREFIX_PATH,
             alwaysWriteToDisk: true
