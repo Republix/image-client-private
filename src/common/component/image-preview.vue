@@ -6,7 +6,7 @@
             class="_mask"></div>
         <div class="image" 
             ref="image"
-            :style="width && height ? `width: ${width}px;height: ${height}px;top: ${cY}px; left: ${cX}px;` : (`top: ${cY}px; left: ${cX}px;`)"
+            :style="`width: ${width}px;height: ${height}px;top: ${cY}px; left: ${cX}px;`"
             @drag="dragHandler"
             @dragstart="dragStartHandler"
             @dragend="dragEndHandler"
@@ -23,7 +23,6 @@
 <script>
 
 import { throttle, debounce } from '../../services/utils'
-import { setTimeout } from 'timers';
 
 let dragCount = 0
 
@@ -98,18 +97,21 @@ export default {
                 return;
             }
 
-            if (!this.width && !this.height) {
-                this.width = this.origin_width
-                this.height = this.origin_height
-            }
+            // if (!this.width && !this.height) {
+            //     this.width = this.origin_width
+            //     this.height = this.origin_height
+            // }
             this.offset = this.offset - 1
-            let _width = this.width / this.scope
-            let _height = this.height / this.scope
-            let {x, y} = this.dom.getBoundingClientRect()
-            this.cX = x - (_width - this.width) / 2
-            this.cY = y - (_height - this.height) / 2
-            this.width = _width
-            this.height = _height
+
+            let {x, y, width, height} = this.dom.getBoundingClientRect()
+
+            let new_width = width / this.scope
+            let new_height = height / this.scope
+            
+            this.cX = x - (new_width - width) / 2
+            this.cY = y - (new_height - height) / 2
+            this.width = new_width
+            this.height = new_height
         },
 
         /**
@@ -119,22 +121,26 @@ export default {
             if ((this.offset + 1) >= MAX_SCALE) {
                 return;
             }
-            if (!this.width && !this.height) {
-                this.width = this.origin_width
-                this.height = this.origin_height
-            }
+            let {x, y, width, height} = this.dom.getBoundingClientRect()
+
+            // if (!this.width && !this.height) {
+                // this.width = this.origin_width
+                // this.height = this.origin_height
+            // }
             this.offset = this.offset + 1
-            let new_width = this.width * this.scope
-            let new_height = this.height * this.scope
-            let {x, y} = this.dom.getBoundingClientRect()
-            this.cX = x - (new_width - this.width) / 2
-            this.cY = y - (new_height - this.height) / 2
+
+            let new_width = width * this.scope
+            let new_height = height * this.scope
+
+            this.cX = x - (new_width - width) / 2
+            this.cY = y - (new_height - height) / 2
             this.width = new_width
             this.height = new_height
         },
 
         dragStartHandler (e) {
             // e.dataTransfer.dropEffect = 'move'
+            this.animation = false;
 
             let clientX = e.clientX
             let clientY = e.clientY
@@ -151,16 +157,20 @@ export default {
          * layerX, Y 鼠标在dom中的位置
          */
         dragHandler: throttle(function (e) {
+        // dragHandler (e) {
+
             if (dragCount === 0) {
                 return dragCount = 1
             }
-            this.animation = false;
 
             let clientX = e.clientX || e.originalTarget && e.originalTarget.clientX
             let clientY = e.clientY || e.originalTarget && e.originalTarget.clinetY
+            // let clientX = e.clientX
+            // let clientY = e.clientY
 
             if (!clientX && !clientY) return
             if (clientX === this.start_cX && clientY === this.start_cY) return
+
 
             let {x, y} = this.dom.getBoundingClientRect()
             clientX = +clientX.toFixed(0)
@@ -171,16 +181,15 @@ export default {
 
             if (this.start_cX !== clientX) {
                 this.start_cX = clientX
-                Object.freeze(this.start_cX);
                 this.cX = _cx
             }
             if (this.start_cY !== clientY) {
                 this.start_cY = clientY
-                Object.freeze(this.start_cY);
                 this.cY = _cy
             }
             dragCount += 1
         }, 10),
+        // },
 
         dragEndHandler () {
             dragCount = 0
@@ -255,6 +264,9 @@ export default {
 
     created () {
         this.preDownloadImg();
+
+        Object.freeze(this.start_cX);
+        Object.freeze(this.start_cY);
     },
 
     /**
