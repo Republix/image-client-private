@@ -3,8 +3,8 @@ const URI = {}
 console.log(process.env.NODE_ENV)
 switch (process.env.NODE_ENV) {
     case 'development': {
-        // URI.BING = 'https://api.republix.cn/bing/'
-        URI.BING = 'http://127.0.0.1:9303/'
+        URI.BING = 'https://api.republix.cn/bing/'
+        // URI.BING = 'http://127.0.0.1:9303/'
         break
     }
     case 'production': {
@@ -17,7 +17,8 @@ switch (process.env.NODE_ENV) {
     }
 }
 
+export const BASE_URI = URI;
 
-export default {
-    URI   
+export const APP_CONFIG = {
+    RIGHT_MENU: false
 }

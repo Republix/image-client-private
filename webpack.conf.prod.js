@@ -56,6 +56,7 @@ module.exports = (env, args) => ({
         new HtmlWebpackPlugin({
             filename: path.join(__dirname, OUTPUT_PATH + '/index.html'), // 输出html文件名字 
             template: path.join(__dirname, '/src/template.html'), // 使用 html模板的位置
+            favicon: './static/wifi.ico',
             inject: false, // 是否要插入打包好的bundle.js 文件  可手动模板渲染插入
             publicPath: PROXY_PATH,
             alwaysWriteToDisk: true

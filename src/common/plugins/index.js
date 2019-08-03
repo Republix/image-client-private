@@ -1,4 +1,6 @@
 import Modal from '../component/modal.vue';
+import Toast from '../component/toast.vue';
+import Loading from '../component/loading.vue';
 
 import directive from './directive';
 
@@ -35,12 +37,15 @@ const typeExtend = () => {
  */
 const mountComponent = (Vue) => {
 
+    let appToast = null
+    let loading = null
+
     /**
      * 手动设置
      */
     Vue.prototype.$confirm = function (title, content) {
         return new Promise(function (resolve, reject) {
-            const confirm = new Vue({
+            const newConfirm = new Vue({
                 render: function (h) {
                     return (
                         <modal title={title} onCancel={this.cancel} onConfirm={this.sure}>
@@ -65,11 +70,45 @@ const mountComponent = (Vue) => {
             document.body.appendChild(confirm.$el)
         })
     }
-
-    Vue.prototype.$toast = function (message, type, duration = 1500) {
-        if (toast === null) {
-            toast = new Vue(Toast)
+    
+    /**
+     * 显示一个受时间影响的Toast
+     */
+    Vue.prototype.$toast = function (message, {duration, icon, type} = {}) {
+        if (appToast === null) {
+            appToast = new Vue(Toast).$mount()
+            document.body.appendChild(appToast.$el)
         }
+        appToast.message = message
+        appToast.duration = duration || 1500
+        appToast.icon = icon || ''
+        appToast.type = type || ''
+        appToast.show()
+    }
+
+    /**
+     * 返回实例的Toast
+     */
+    Vue.prototype.$message = function (message, {duration, icon, type} = {}) {
+        if (appToast === null) {
+            appToast = new Vue(Toast).$mount()
+            document.body.appendChild(appToast.$el)
+        }
+        appToast.message = message
+        appToast.duration = duration || 1500
+        appToast.icon = icon || ''
+        appToast.type = type || ''
+        appToast.show()
+        return appToast
+    }
+
+    Vue.prototype.$loading = function () {
+        if (loading === null) {
+            loading = new Vue(Loading).$mount()
+            document.body.appendChild(loading.$el)
+        }
+        loading.show()
+        return loading
     }
 }
 
@@ -78,6 +117,7 @@ const mountComponent = (Vue) => {
  */
 const commonComponent = (Vue) => {
     Vue.component(Modal.name, Modal)
+    Vue.component(Toast.name, Toast)
 }
 
 

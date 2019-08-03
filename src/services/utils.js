@@ -76,10 +76,10 @@ export function throttle (func, gap = 100) {
         
     return function () { // A
         let _nowTime = + new Date() //  快捷转换为Number类型数据
-        if (_nowTime - _lastTime >= gap) {
+        if (_nowTime - _lastTime >= gap || _lastTime === 0) {
             func.apply(this, arguments)
             _lastTime = _nowTime
-        } 
+        }
     }
 }
 
@@ -89,9 +89,83 @@ export function debounce (func, delay = 100) {
     return function() {
         let context = this,
             args = arguments
-        clearTimeout(timer)
         timer = setTimeout(function() {
+            timer && clearTimeout(timer)
             func.apply(context, args)
         }, delay)
     }
+}
+
+/**
+ * 缓存图片
+ * @param {String} src 
+ * @return Promise
+ */
+export function cacheImage (src) {
+    return new Promise((resolve) => {
+        let image = new Image()
+        image.src = src
+        image.onload = function () {
+            image = null
+            resolve(true)
+        }
+        image.onerror = function () {
+            image = null
+            resolve(false)
+        }
+    })
+}
+
+/**
+ * 下载图片
+ * @param {String} link 下载链接
+ * @param {String} name 下载文件名称
+ * @param {String} crossOrigin 跨预选项
+ */
+export function downloadImage (link, name = 'download', crossOrigin = '') {
+    return new Promise((resolve) => {
+        let image = new Image
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d')
+        
+        image.crossOrigin = crossOrigin
+        image.src = link
+
+        image.onload = function () {
+            canvas.width = this.width
+            canvas.height = this.height
+
+            context.drawImage(this, 0, 0)
+
+            let tagA = document.createElement('a')
+            let dataURL = canvas.toDataURL('image/jpg')
+            tagA.href = URL.createObjectURL(base64Img2Blob(dataURL))
+            tagA.download = (name || 'download') + '.png'
+            const clickEvent = new MouseEvent('click')
+            tagA.dispatchEvent(clickEvent)
+            URL.revokeObjectURL(tagA.href)
+            resolve(true)
+            image = null
+            tagA = null
+        }
+
+        image.onerror = function () {
+            resolve(false)
+        }
+    })
+    
+}
+
+/**
+ * 在浏览器中显示图片
+ * @param {String} link 
+ * @param {String} target 
+ */
+export function viewImageInBrowser (link, target = '') {
+    let tagA = document.createElement('a')
+    tagA.href = link
+    tagA.target = target
+    const clickEvent = new MouseEvent('click')
+    tagA.dispatchEvent(clickEvent)
+    tagA = null
 }

@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import {APP_CONFIG} from '../config';
 
 import {
     SET_INDEX,
@@ -8,7 +8,8 @@ import {
     CANCEL_MARK,
     OVERWRITE_MARK,
     SET_ADMIN,
-    CLEAR_ADMIN
+    CLEAR_ADMIN,
+    UPDATE_CONFIG
 } from './mutationTypes'
 
 import {
@@ -18,9 +19,11 @@ import {
     DELETE_MARKS,
     RECOVERY_MARKS,
     CLEAR_IMAGE,
-    ADMIN_LOGIN,
-    ADMIN_LOGOFF,
-    RECOVERY_INDEX
+    // ADMIN_LOGIN,
+    // ADMIN_LOGOFF,
+    RECOVERY_INDEX,
+    SET_CONFIG,
+    RECOVERY_CONFIG
 } from './actionTypes'
 
 import {LocalStorage} from '../services/storage'
@@ -45,6 +48,9 @@ export default {
             token: '',
             loginDate: ''
         },
+        config: {
+            menu: APP_CONFIG.RIGHT_MENU
+        }
     },
     getters: {
         indexId (state) {
@@ -124,6 +130,15 @@ export default {
             state.admin.loginDate = ''
             state.admin.token = ''
             state.admin.name = ''
+        },
+
+        /**
+         * 更新配置
+         */
+        [UPDATE_CONFIG] (state, {menu}) {
+            if (menu !== undefined) {
+                state.config.menu = menu
+            }
         }
     },
     actions: {
@@ -131,10 +146,12 @@ export default {
             LocalStorage.set('index_img', data)
             commit(SET_INDEX, data)
         },
+
         [REMOVE_INDEX] ({commit}) {
             LocalStorage.set('index_img', '')
             commit(CANCEL_INDEX)
         },
+
         [RECOVERY_INDEX] ({commit}) {
             let data = LocalStorage.get('index_img')
             data && commit(SET_INDEX, data)
@@ -148,10 +165,12 @@ export default {
             commit(MARK, data)
             LocalStorage.set('mark_img', state.marks)
         },
+
         [DELETE_MARKS] ({commit, state}, id) {
             commit(CANCEL_MARK, id)
             LocalStorage.set('mark_img', state.marks)
         },
+
         [RECOVERY_MARKS] ({commit, state}) {
             let data = LocalStorage.get('mark_img')
             commit(OVERWRITE_MARK, data)
@@ -163,11 +182,25 @@ export default {
             LocalStorage.remove('index_img')
             LocalStorage.remove('mark_img')
         },
-        [ADMIN_LOGIN] ({commit, state, dispatch}) {
 
+        // [ADMIN_LOGIN] ({commit, state, dispatch}) {
+
+        // },
+        // [ADMIN_LOGOFF] ({commit, state, dispatch}) {
+
+        // }
+        [SET_CONFIG] ({commit, state}, {menu}) {
+            let copyConfig = {...state.config}
+            if (menu !== undefined) {
+                copyConfig.menu = menu
+            }
+            commit(UPDATE_CONFIG, copyConfig)
+            LocalStorage.set("app_config", copyConfig)
         },
-        [ADMIN_LOGOFF] ({commit, state, dispatch}) {
 
+        [RECOVERY_CONFIG] ({commit}) {
+            let appConfig = LocalStorage.get("app_config")
+            appConfig && commit(UPDATE_CONFIG, appConfig)
         }
     }
 }

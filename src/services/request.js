@@ -1,7 +1,7 @@
 import supreagent from 'superagent'
-import CONFIG from '../config'
+import {BASE_URI} from '../config'
 
-const URI = CONFIG.URI
+const URI = BASE_URI
 
 
 const Service = {

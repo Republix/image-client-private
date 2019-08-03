@@ -1,22 +1,14 @@
 const app = () => import('./app.vue')
 // const index = () => import(/* webpackChunkName: "index" */'./layout/index.vue')
-// const discover = () => import(/* webpackChunkName: "dis" */'./layout/discover.vue')
 const index = () => import('./layout/index.vue')
-const discover = () => import('./layout/discover.vue')
+const discover = () => import('./layout/discover/index.vue')
 
-const mark = () => import('./layout/side/mark.vue')
-const bingList = () => import('./layout/side/list.vue')
-const collage = () => import('./layout/side/collage.vue')
+const mark = () => import('./layout/discover/mark.vue')
+const bingList = () => import('./layout/discover/list.vue')
+const collage = () => import('./layout/discover/collage.vue')
 
+import NAME_MAP from './routeTypes'
 
-const NAME_MAP = {
-    APP: 'app',
-    INDEX: 'index',
-    DISCOVER: 'discover',
-    MARK: 'MARK',
-    COLLAGE: 'COLLAGE',
-    BING_LIST: 'BINGLIST'
-}
 
 const ROUTES = {
     base: [
@@ -68,4 +60,3 @@ const ROUTES = {
 
 
 export const routes = ROUTES
-export const ROUTE_NAME_MAP = NAME_MAP

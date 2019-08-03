@@ -12,3 +12,6 @@ export const CLEAR_IMAGE = 'CLEAR_IMAGE'
 
 export const ADMIN_LOGIN = 'ADMIN_LOGIN'
 export const ADMIN_LOGOFF = 'ADMIN_LOGOFF'
+
+export const RECOVERY_CONFIG = 'RECOVERY_CONFIG'
+export const SET_CONFIG = 'SET_CONFIG'

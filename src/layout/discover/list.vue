@@ -6,14 +6,18 @@
                 v-for="(img, idx) in imageList"
                 :key="idx"
                 class="img-item">
+                <template v-if="!img.loaded">
+                    <div class="_loading"></div>
+                </template>
+                
                 <div class="mask-view">
                     <div class="_title">{{img.title || img.copyright}}</div>
                     <div class="btn-group">
-                        <i @click="preview(img.full)" class="iconfont iconfont-preview"></i>
-                        <i @click="setIndex(img)" class="iconfont iconfont-setting"></i>
+                        <i @click="creative(img.id)" class="iconfont iconfont-discover"></i>
+                        <i @click="preview(img.full)" class="iconfont iconfont-preview ico-fix-1"></i>
                     </div>
                 </div>
-                <img :src="img.src" :alt="img.title || ''">
+                <img :src="img.src" @load="img.loaded = true;" v-show="img.loaded" :alt="img.title || ''">
             </div>
         </div>
 
@@ -27,12 +31,20 @@
 </template>
 <script>
 
-import request from '../../services/request'
+/**
+ * Todo
+ * - 列表中图片加载时背景动画
+ * - 列表flex布局添加元素后动画
+ * - 主页侧边栏功能完善
+ */
 
+import request from '../../services/request'
 import {CREATE_INDEX} from '../../vuex/actionTypes'
-import ImagePreview from '../../common/component/image-preview.vue'
 import { SET_INDEX } from '../../vuex/mutationTypes';
 import {throttle, debounce} from '../../services/utils'
+import ROUTER_NAME_MAP from '../../routeTypes'
+
+import ImagePreview from '../../common/component/image-preview.vue'
 
 const origin_resolution = '1920x1080'
 const preview_resolution = '800x480'
@@ -64,9 +76,14 @@ export default {
 
                 // 无数据时
                 if (!newList || newList.length === 0) {
-                    // do nothing
                     return
                 }
+
+                // preset
+                newList = newList.map(i => {
+                    i.loaded = false;
+                    return i;
+                })
 
                 // 分页请求
                 if (newList.length > 0) { // concat
@@ -100,6 +117,10 @@ export default {
 
                 return elm
             })
+        },
+
+        creative (id) {
+            this.$router.push({ name: ROUTER_NAME_MAP.INDEX, query: { id } })
         },
 
         preview (src) {
@@ -153,7 +174,7 @@ export default {
         this.destoryScrollHandler()
     },
     components: {
-        ImagePreview
+        ImagePreview,
     }
 }
 </script>
@@ -167,6 +188,7 @@ export default {
         min-height: 100vh;
         height: 0;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         &::-webkit-scrollbar {
             width: 3px;
         }
@@ -183,6 +205,7 @@ export default {
             flex-wrap: wrap;
             position: relative;
             padding-bottom: 100px;
+            transition-duration: .3s;
             
             .img-item {
                 position: relative;
@@ -192,6 +215,18 @@ export default {
                 border-radius: 5px;
                 @include transition(.3s);
                 overflow: hidden;
+                
+                ._loading {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    // box-shadow: 0 0 10px #e3e3e3 inset;
+                    background-color: rgba(255, 255, 255, 0.3);
+                    // filter: blur(40px);
+                    animation: img-loading 3s infinite linear;
+                }
 
                 .mask-view {
                     display: none;
@@ -226,6 +261,9 @@ export default {
                                 color: #ffffff;
                             }
                         }
+                        .ico-fix-1 {
+                            font-size: 24px;
+                        }
                     }
                 }
 
@@ -246,9 +284,15 @@ export default {
                     z-index: 1;
                     width: 100%;
                     height: 100%;
+                    animation: img-fade .3s ease;
                     @include transition(.3s);
                 }
             }
+            
+            // &::after {
+            //     content: '';
+            //     flex: auto;
+            // }
         }
     }
 
@@ -258,6 +302,33 @@ export default {
         }
         100% {
             background-color: rgba($color: #000000, $alpha: 0.6);
+        }
+    }
+
+    @keyframes img-fade {
+        0% {
+            opacity: 0.2;
+            transform: scale(0.9);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes img-loading {
+        0% {
+            opacity: 0;
+            filter: blur(10px);
+        }
+        50% {
+            opacity: 1;
+            filter: blur(30px);
+            // background-color: rgba(255, 255, 255, 0.5);
+        }
+        100% {
+            opacity: 0;
+            filter: blur(10px);
         }
     }
 

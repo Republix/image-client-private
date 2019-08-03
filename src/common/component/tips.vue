@@ -1,15 +1,20 @@
 <template>
     <!-- 此处如果要用v-if 要注意tip.js中挂载顺序问题 -->
-    <div v-show="open" class="app-tips">
-        {{ content }}
-    </div>
+    <transition name="tips-fade">
+        <div 
+            v-show="open" 
+            class="app-tips"
+            :class="direction === 'left' || direction === 'right' ? 'app-tips-vertical-center' : ''"
+        >{{ content }}</div>
+    </transition>
 </template>
 <script>
 export default {
     data() {
         return {
             content: '',
-            open: false
+            open: false,
+            direction: ''
         }
     },
     methods: {
@@ -29,13 +34,26 @@ export default {
 
     .app-tips {
         position: absolute;
-        right: -10px;
-        bottom: -10px;
+        display: inline-block;
         @include box-sizing(border-box);
-        padding: 4px 7px;
-        @include border-radius(3px);
+        padding: 5px 0.8rem;
+        @include border-radius(5px);
         background-color: #000000;
         color: #ffffff;
+        font-size: 1rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .app-tips-vertical-center {
+        @include transform(translateY(-50%));
+    }
+
+    .tips-fade-enter-active, .tips-fade-leave-active {
+        @include transition(.3s);
+    }
+
+    .tips-fade-enter, .tips-fade-leave-to {
+        opacity: 0;
     }
 </style>
 

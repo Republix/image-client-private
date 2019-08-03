@@ -1,22 +1,29 @@
 <template>
     <transition name="wp-tools-fade">
         <div :class="['wp-tools', theme || '']">
-            <button @click="menuHandler('today')" class="iconfont iconfont-discover btn"></button>
+            <!-- <button @click="menuHandler('today')" 
+                v-tips.left="'today'"
+                class="iconfont iconfont-discover btn"></button> -->
             <template v-if="image">
-                <!-- <button @click="menuHandler('setting')" class="iconfont iconfont-setting btn"></button> -->
-                <button @click="likeHandler()" class="iconfont btn"
+                <button @click="likeHandler()" 
+                    class="iconfont btn"
                     :class="likeId === currentId ? 'iconfont-like-fill' : 'iconfont-like'"
                 ></button>
 
-                <button @click="menuHandler('download')" class="iconfont iconfont-download btn"></button>
-                <button @click="menuHandler('fullscreen')" class="iconfont iconfont-fullscreen btn"></button>
-                <button @click="menuHandler('creative')" class="iconfont iconfont-creative btn"></button>
+                <button @click="menuHandler('download')" 
+                    v-tips.left="'下载'"
+                    class="iconfont iconfont-download btn"></button>
+                <button @click="menuHandler('fullscreen')" 
+                    v-tips.left="'全屏'"
+                    class="iconfont iconfont-fullscreen btn"></button>
+                <button @click="menuHandler('viewInNewTab')" 
+                    v-tips.left="'新标签页'"
+                    class="iconfont iconfont-creative btn"></button>
 
-                <button @click="favorHandler()" class="iconfont btn"
+                <button @click="favorHandler()" 
+                    class="iconfont btn"
                     :class="marked ? 'iconfont-favor-fill' : 'iconfont-favor'"
                 ></button>
-                <!-- <button @click="favorHandler()" class="iconfont btn iconfont-favor-fill"
-                ></button> -->
             </template>
         </div>
     </transition>
@@ -68,8 +75,8 @@ export default {
 </script>
 <style lang="scss">
 
-    @import '../scss/variables';
-    @import '../scss/mixin';
+    @import '../common/scss/variables';
+    @import '../common/scss/mixin';
 
     $bg-color: rgba(0, 0, 0, 0.35);
     $bg-color-hover: rgba(0, 0, 0 ,0.65);
@@ -99,6 +106,7 @@ export default {
             font-size: 30px;
             color: rgba(255, 255, 255, 0.5);
             margin: 10px 0;
+            padding: 0 3px;
             cursor: pointer;
             user-select: none;
             outline: none;
