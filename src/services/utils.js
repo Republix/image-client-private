@@ -52,15 +52,14 @@ export function cancelFullScreen () {
         wScript && wScript.SendKeys("{F11}")
         return
     }
-    let cacheElm = document.documentElement
+    let cacheElm = document;
     let cancelFull = cacheElm.cancelFullScreen || cacheElm.webkitCancelFullScreen || cacheElm.mozCancelFullScreen || cacheElm.exitFullScreen
-
     cancelFull && cancelFull.call(cacheElm)
 
 }
 
 export function isFullScreen () {
-    return document.isFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen
+    return document.isFullScreen || document.mozFullScreen || document.mozIsFullScreen || document.webkitIsFullScreen
 }
 
 // 这种不能解构
