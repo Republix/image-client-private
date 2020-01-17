@@ -123,13 +123,19 @@ export default {
             this.changeLock = true
             let result = null
             try {
+                id = '20200118'
                 result = await request.GetTodayImageInfo(id)
                 result = JSON.parse(result.text)
                 // 预览模式加载失败时 显示当天数据
-                if (this.mode === 'preview' && result.success === false) {
-                    this.$toast('获取不到预览数据，将显示当天数据', {duration: 3000})
-                    this.mode = 'browser'
-                    this.initialPage(this.indexId)
+                if (result.success === false) {
+                    if (this.mode === 'preview') {
+                        this.$toast('获取不到预览数据，将显示当天数据', {duration: 3000})
+                        this.mode = 'browser'
+                        this.initialPage(this.indexId)
+                    } else {
+                        let msg = result.msg;
+                        msg && this.$toast(msg)
+                    }
                 }
             } catch (e) {
                 this.$toast('获取信息失败')
