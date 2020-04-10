@@ -9,6 +9,7 @@ const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 const StyleLintPlugin = require('stylelint-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 const { cleanFolder } = require('./utils')
 
@@ -74,6 +75,15 @@ module.exports = (env, args) => ({
 
         // 配合 htmlWP 插件 alwaysWriteToDisk
         new HtmlWebpackHarddiskPlugin(),
+
+        // 压缩
+        new CompressionWebpackPlugin({
+            filename: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: new RegExp('\\.(js|css|html)$'),
+            threshold: 10240,
+            minRatio: 0.8
+        })
         
     ],
 
