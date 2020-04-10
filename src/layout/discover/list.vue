@@ -51,6 +51,7 @@ const preview_resolution = '800x480'
 const LOAD_VALVE = 200
 
 export default {
+    name: 'list-view',
     data() {
         return {
             imageList: [],

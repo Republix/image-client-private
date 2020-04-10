@@ -123,7 +123,6 @@ export default {
             this.changeLock = true
             let result = null
             try {
-                id = '20200118'
                 result = await request.GetTodayImageInfo(id)
                 result = JSON.parse(result.text)
                 // 预览模式加载失败时 显示当天数据
