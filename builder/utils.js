@@ -1,12 +1,13 @@
 const path = require('path')
 const fs = require('fs')
+const { buildConfig: { distPath } } = require('./app.config')
 
 /**
  * 
  * @param {String} folderPath - 文件或文件夹位置
  * @param {*} unlinkDir - 是否要删除改文件夹
  */
-function unlink (folderPath, unlinkDir) {
+function unlink (folderPath, unlinkDir = false) {
         
     let folderExists = fs.existsSync(folderPath)
     if (!folderExists) return console.log(`[cleanFolder] [Error] 删除文件失败，目录不存在: ${folderPath}`)
@@ -19,7 +20,6 @@ function unlink (folderPath, unlinkDir) {
             let filePath = path.join(folderPath, name)
 
             if (fs.statSync(filePath).isDirectory()) {
-
                 unlink(filePath, true)
             } else {
                 fs.unlinkSync(filePath)
@@ -31,11 +31,15 @@ function unlink (folderPath, unlinkDir) {
     }
 }
 
-function cleanFolder () {
-    unlink(...arguments)
-    console.log('#cleanFolderFinish', arguments[0])
+/**
+ * 删除打包文件夹
+ */
+function cleanDistFolder () {
+  console.info('清空打包文件夹', distPath)
+  unlink(distPath, false)
 }
 
+
 module.exports = {
-    cleanFolder
+  cleanDistFolder
 }

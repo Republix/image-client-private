@@ -1,7 +1,6 @@
 const URI = {};
 const protocol = location.protocol.indexOf('https') > -1 ? 'https' : 'http';
 
-console.log('hi')
 switch (process.env.NODE_ENV) {
     case 'development': {
         URI.BING = 'https://api.republix.cn/bing/'

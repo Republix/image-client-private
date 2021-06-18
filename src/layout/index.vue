@@ -69,7 +69,6 @@ import { INSERT_MARKS, DELETE_MARKS, CREATE_INDEX, REMOVE_INDEX, RECOVERY_INDEX,
 import ROUTE_NAME_MAP from '../routeTypes'
 import { mapState } from 'vuex';
 import { testDate } from '../services/bing'
-import { setTimeout } from 'timers';
 
 // dev
 import Modal from './modal.vue';
