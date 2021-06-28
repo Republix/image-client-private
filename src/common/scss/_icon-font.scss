@@ -12,15 +12,7 @@
 //     url('../fonts/iconfont.svg#iconfont') format('svg');
 // }
 
-@font-face {
-    font-family: 'iconfont';  /* project id 1060212 */
-    src: url('//at.alicdn.com/t/font_1060212_q5v210bidl.eot');
-    src: url('//at.alicdn.com/t/font_1060212_q5v210bidl.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_1060212_q5v210bidl.woff2') format('woff2'),
-    url('//at.alicdn.com/t/font_1060212_q5v210bidl.woff') format('woff'),
-    url('//at.alicdn.com/t/font_1060212_q5v210bidl.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_1060212_q5v210bidl.svg#iconfont') format('svg');
-}
+
 
 .iconfont {
     font-family: "iconfont" !important;
@@ -30,21 +22,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-/*
-    Fun 1
-    can use by 字体编码
-    <i class="iconfont">&#x33;</i> 
-    ps: &# 开头的为html实体
-*/
-
-/*
-    Fun2
-    use by className
-    .iconfont-sky::before {
-        content: '\x33;';
-    }
-    <i class="iconfont iconfont-sky"></i>
-*/
+@import url('//at.alicdn.com/t/font_1060212_nhcmmvfuwe.css');
 
 
 .iconfont-edit::after { content: '\e649' }

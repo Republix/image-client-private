@@ -14,10 +14,9 @@ const DEV_MODE = Boolean(process.env.NODE_ENV === 'development')
 
 
 if (DEV_MODE) {
-    Vue.config.devtools = true;
-    Vue.config.productionTip = true; // ?show 'U are running Vue in developemnt mode'
+  Vue.config.devtools = true
+  Vue.config.productionTip = true
 }
-
 
 
 Vue.use(Vuex);
@@ -25,21 +24,15 @@ Vue.use(VueRouter);
 Vue.use(Plugins);
 
 const store = new Vuex.Store(rootStore)
-// { modules: { } }
 
 const router = new VueRouter({
-    // base: '/',
-    mode: 'history', // todo note 这里需要配合 webpack-dev-server 的 historyApiFallback: true 
-    // mode: 'hash', // history or hash
-    routes: routes.base
+  mode: 'history', 
+  routes: routes.base
 })
 
-/**
- * mounted && start
- */
-const app = new Vue({
-    el: '#app',
-    render: h => (<router-view></router-view>),
-    store,
-    router
+export default new Vue({
+  el: '#app',
+  render: h => (<router-view></router-view>),
+  store,
+  router
 })

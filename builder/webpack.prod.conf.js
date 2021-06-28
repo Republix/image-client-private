@@ -13,7 +13,7 @@ module.exports = merge(baseWebpackConfig, {
   plugins: [
     // 压缩
     new CompressionWebpackPlugin({
-      filename: '[path].gz[query]',
+      filename: '[name].gz[query]',
       algorithm: 'gzip',
       test: new RegExp('\\.(js|css|html)$'),
       threshold: 10240,
